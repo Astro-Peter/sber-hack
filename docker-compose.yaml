@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: sber-hack-container
+    ports:
+      - "2432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db/:/docker-entrypoint-initdb.d/:ro
+    environment:
+      - POSTGRES_DB=sber-hack-database
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+
+volumes:
+  postgres_data:
