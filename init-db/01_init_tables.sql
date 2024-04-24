@@ -1,8 +1,6 @@
-CREATE TYPE topic_name AS ENUM ('ecology', 'it', 'other'); -- Дополните список по мере необходимости
-
 CREATE TABLE topics (
     id SERIAL PRIMARY KEY,
-    name topic_name UNIQUE NOT NULL
+    name VARCHAR UNIQUE NOT NULL
 );
 
 CREATE TABLE topic_rates (
