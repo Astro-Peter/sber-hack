@@ -1,7 +1,7 @@
 import pandas as pd
 
 from datetime import date
-from GoogleScholarMethods.SelectFilesAbstract import SelectFilesAbstract
+from ArticlesMethods.SelectFilesAbstract import SelectFilesAbstract
 
 
 class SelectPdfFilesLocal(SelectFilesAbstract):
@@ -9,4 +9,4 @@ class SelectPdfFilesLocal(SelectFilesAbstract):
                              from_date: date,
                              to_date: date) -> pd.DataFrame:
         data = pd.read_csv("stats.csv")
-        return data[(data["date"] <= to_date) & (data["date"] >= from_date)]
+        return data[(data["date"] <= to_date.strftime("%Y-%m-%d")) & (data["date"] >= from_date.strftime("%Y-%m-%d"))]

@@ -13,13 +13,18 @@ CREATE TABLE topic_rates (
 );
 
 
-CREATE OR REPLACE FUNCTION add_topic_rating(topic_name topic_name, rating_increment INT, rating_date DATE) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION add_topic_rating(topic_name VARCHAR, rating_increment INT, rating_date DATE) RETURNS VOID AS $$
 DECLARE
     topic_id_to_update INT;
     v_year INT := EXTRACT(YEAR FROM rating_date);
     v_month INT := EXTRACT(MONTH FROM rating_date);
 BEGIN
     -- Находим ID темы по её названию
+    IF NOT EXISTS (
+        SELECT FROM topics WHERE name = topic_name
+    ) THEN
+        INSERT INTO topics(name) VALUES(topic_name);
+    END IF;
     SELECT id INTO topic_id_to_update FROM topics WHERE name = topic_name;
 
     -- Проверяем, существует ли запись с данным годом и месяцем для данной темы

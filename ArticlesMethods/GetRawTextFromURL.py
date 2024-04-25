@@ -2,7 +2,7 @@ import io
 import pypdf
 import requests
 
-from GoogleScholarMethods.GetRawText import GetRawText
+from ArticlesMethods.GetRawText import GetRawText
 
 
 class GetRawTextFromURL(GetRawText):

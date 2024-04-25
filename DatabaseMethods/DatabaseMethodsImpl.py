@@ -2,7 +2,7 @@ from datetime import datetime
 import psycopg2
 import pandas as pd
 
-from DatabaseMethodsAbstract import DatabaseMethodsAbstract
+from DatabaseMethods.DatabaseMethodsAbstract import DatabaseMethodsAbstract
 
 
 class DatabaseMethods(DatabaseMethodsAbstract):
