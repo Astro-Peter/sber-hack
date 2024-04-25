@@ -48,3 +48,12 @@ class DatabaseMethods(DatabaseMethodsAbstract):
             GROUP BY t.name
         """
         return pd.read_sql_query(query, self.conn, params=(year,))
+
+    def extract_topics_by_name(self, topic_name: str):
+        query = """
+                    SELECT t.name, tr.rating, tr.year, tr.month 
+                    FROM topics t 
+                    JOIN topic_rates tr ON t.id = tr.topic_id 
+                    WHERE t.name = %s
+                """
+        return pd.read_sql_query(query, self.conn, params=(topic_name,))

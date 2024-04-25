@@ -19,3 +19,6 @@ class DatabaseMethodsAbstract(ABC):
     def extract_topics_by_year(self, year: int):
         pass
 
+    @abstractmethod
+    def extract_topics_by_name(self, topic_name: str):
+        pass
