@@ -1,6 +1,8 @@
 from datetime import datetime
 import psycopg2
-from DatabaseMethods.DatabaseMethodsAbstract import DatabaseMethodsAbstract
+import pandas as pd
+
+from DatabaseMethodsAbstract import DatabaseMethodsAbstract
 
 
 class DatabaseMethods(DatabaseMethodsAbstract):
@@ -17,9 +19,8 @@ class DatabaseMethods(DatabaseMethodsAbstract):
         self.conn.commit()
 
     def get_all_topics(self):
-        with self.conn.cursor() as cursor:
-            cursor.execute("SELECT id, name FROM topics")
-            return cursor.fetchall()
+        query = "SELECT id, name FROM topics"
+        return pd.read_sql_query(query, self.conn)
 
     def increment_topic_rate(self, topic_name: str, rating_increment: int, rating_date: datetime.date):
         with self.conn.cursor() as cursor:
@@ -30,17 +31,20 @@ class DatabaseMethods(DatabaseMethodsAbstract):
         self.conn.commit()
 
     def extract_topics_by_month_year(self, year: int, month: int):
-        with self.conn.cursor() as cursor:
-            cursor.execute(
-                "SELECT t.name, tr.rating FROM topics t JOIN topic_rates tr ON t.id = tr.topic_id WHERE tr.year = %s AND tr.month = %s",
-                (year, month)
-            )
-            return cursor.fetchall()
+        query = """
+            SELECT t.name, tr.rating 
+            FROM topics t 
+            JOIN topic_rates tr ON t.id = tr.topic_id 
+            WHERE tr.year = %s AND tr.month = %s
+        """
+        return pd.read_sql_query(query, self.conn, params=(year, month))
 
     def extract_topics_by_year(self, year: int):
-        with self.conn.cursor() as cursor:
-            cursor.execute(
-                "SELECT t.name, SUM(tr.rating) FROM topics t JOIN topic_rates tr ON t.id = tr.topic_id WHERE tr.year = %s GROUP BY t.name",
-                (year,)
-            )
-            return cursor.fetchall()
+        query = """
+            SELECT t.name, SUM(tr.rating) 
+            FROM topics t 
+            JOIN topic_rates tr ON t.id = tr.topic_id 
+            WHERE tr.year = %s 
+            GROUP BY t.name
+        """
+        return pd.read_sql_query(query, self.conn, params=(year,))
