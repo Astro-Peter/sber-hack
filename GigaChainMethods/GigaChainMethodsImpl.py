@@ -4,7 +4,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from GigaChainMethods.GigaChainMethodsAbstract import GigaChainMethodsAbstract
 from langchain.chains.summarize import load_summarize_chain
-from langchain.text_splitter import CharacterTextSplitter
 from langchain.chat_models.gigachat import GigaChat
 
 
