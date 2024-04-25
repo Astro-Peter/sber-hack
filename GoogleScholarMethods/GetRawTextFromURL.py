@@ -6,8 +6,8 @@ from GoogleScholarMethods.GetRawText import GetRawText
 
 
 class GetRawTextFromURL(GetRawText):
-    def getText(self,
-                url: str) -> str:
+    def get_text(self,
+                 url: str) -> str:
         response = requests.get(url)
 
         pdf_stream = io.BytesIO(response.content)

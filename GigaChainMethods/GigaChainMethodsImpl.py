@@ -15,8 +15,8 @@ class GigaChainMethodsImpl(GigaChainMethodsAbstract):
         self.gigachat = GigaChat(model="GigaChat-Pro", scope='GIGACHAT_API_CORP', credentials=key,
                                  verify_ssl_certs=False)
 
-    def getThemes(self,
-                  text: str) -> dict:
+    def get_themes(self,
+                   text: str) -> dict:
         contents = RecursiveCharacterTextSplitter(
             chunk_size=7000,
             chunk_overlap=0,

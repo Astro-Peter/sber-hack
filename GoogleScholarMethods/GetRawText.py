@@ -1,4 +1,4 @@
 class GetRawText:
-    def getText(self,
-                file: str) -> str:
+    def get_text(self,
+                 file: str) -> str:
         pass
