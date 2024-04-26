@@ -32,20 +32,21 @@ class DatabaseMethods(DatabaseMethodsAbstract):
 
     def extract_topics_by_month_year(self, year: int, month: int):
         query = """
-            SELECT t.name, tr.rating 
-            FROM topics t 
-            JOIN topic_rates tr ON t.id = tr.topic_id 
+            SELECT t.name, tr.year, tr.month, SUM(tr.rating) AS rating
+            FROM topics t
+            JOIN topic_rates tr ON t.id = tr.topic_id
             WHERE tr.year = %s AND tr.month = %s
+            GROUP BY t.name, tr.year, tr.month
         """
         return pd.read_sql_query(query, self.conn, params=(year, month))
 
     def extract_topics_by_year(self, year: int):
         query = """
-            SELECT t.name, SUM(tr.rating) 
-            FROM topics t 
-            JOIN topic_rates tr ON t.id = tr.topic_id 
-            WHERE tr.year = %s 
-            GROUP BY t.name
+            SELECT t.name, tr.year, SUM(tr.rating) AS rating
+            FROM topics t
+            JOIN topic_rates tr ON t.id = tr.topic_id
+            WHERE tr.year = %s
+            GROUP BY t.name, tr.year
         """
         return pd.read_sql_query(query, self.conn, params=(year,))
 

@@ -1,0 +1,9 @@
+inquirerpy~=0.3.4
+pandas~=2.2.2
+matplotlib~=3.8.4
+pypdf~=4.2.0
+requests~=2.31.0
+psycopg2~=2.9.9
+langchain~=0.1.16
+gigachat
+python-dotenv~=1.0.1
