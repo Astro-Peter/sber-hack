@@ -32,9 +32,7 @@ class GigaChainMethodsImpl(GigaChainMethodsAbstract):
                                 f"убывания по важности в статье через запятые без точки в конце: {summary.get('output_text')}")]
         bullet_points = self.gigachat(messages).content.lower()
         if bullet_points[-1] == '.':
-            print("why?")
             bullet_points = bullet_points[:-1]
-        print(bullet_points)
         bullets = [bullet.rstrip().lstrip() for bullet in bullet_points.split(',')]
         answer = {}
         for i in range(len(bullets)):
